@@ -2,16 +2,17 @@ function UrlService() {};
 
 UrlService.prototype = {
 
-	redirect : function( $url ) {
-
+	redirect : function( $uri ) {
+		var $url = this.base() + '/' + $uri;
+		$( location ).attr( 'href', $url );
 	},
 
-	redirectOutside : function() {
-
+	redirectOutside : function( $url ) {
+		$( location ).attr( 'href', $url );
 	},
 
 	base : function() {
-		return '';
+		return $site_config.base_url;
 	}
 
 };

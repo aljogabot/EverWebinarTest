@@ -33,6 +33,7 @@ elixir(
 			[
 				'libs/jquery.min.js',
 				'services/UrlService.js',
+				'services/AjaxService.js',
 				'services/FormMessageService.js',
 				'services/BootstrapModalService.js'
 			],

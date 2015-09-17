@@ -41,23 +41,16 @@ AuthenticationPage.prototype = {
 				$FormMessageService.setElement( $form );
 				$FormMessageService.notify( 'Processing ...' );
 
-				$.ajax(
-					{
-						url	: $url,
-						type: 'POST',
-						dataType: 'json',
-						data: $data,
-						success: function( $json_response ) {
-							if( $json_response.success ) {
-								$FormMessageService.success( $json_response.message );
+				$http.post( $url, $data,
+					function( $json_response ) {
+						if( $json_response.success ) {
+							$FormMessageService.success( $json_response.message );
 
-							} else {
-								$FormMessageService.error( $json_response.message );
-							}
+						} else {
+							$FormMessageService.error( $json_response.message );
 						}
 					}
 				);
-
 			}
 		);
 
@@ -76,19 +69,13 @@ AuthenticationPage.prototype = {
 				$FormMessageService.setElement( $form );
 				$FormMessageService.notify( 'Processing ...' );
 
-				$.ajax(
-					{
-						url	: $url,
-						type: 'POST',
-						dataType: 'json',
-						data: $data,
-						success: function( $json_response ) {
-							if( $json_response.success ) {
-								$FormMessageService.success( $json_response.message );
+				$http.post( $url, $data,
+					function( $json_response ) {
+						if( $json_response.success ) {
+							$FormMessageService.success( $json_response.message );
 
-							} else {
-								$FormMessageService.error( $json_response.message );
-							}
+						} else {
+							$FormMessageService.error( $json_response.message );
 						}
 					}
 				);
