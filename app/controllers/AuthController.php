@@ -63,11 +63,13 @@ class AuthController extends \BaseController {
 			return $this->json->error( $message );
 		}
 
-		if( ! Auth::attempt( Input::only( 'email', 'password' ) ) ) {
+		$remember_me = Input::get( 'remember_me', FALSE ) === "TRUE";
+
+		if( ! Auth::attempt( Input::only( 'email', 'password' ), $remember_me ) ) {
 			return $this->json->error( 'Invalid Email or Password' );
 		}
 
-		// 
+		// Else True
 		return $this->json->success( 'Login Successfull ...' );	
 	}
 
