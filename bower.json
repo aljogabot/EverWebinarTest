@@ -1,0 +1,17 @@
+{
+  "name": "everwebinartest",
+  "version": "0.0.0",
+  "homepage": "https://github.com/aljogabot/EverWebinarTest",
+  "authors": [
+    "Aljo Victor Gabot <aljo.gabot@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "resources/assets/bower_components/",
+    "test",
+    "tests"
+  ]
+}
