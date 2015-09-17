@@ -15,4 +15,8 @@ class BaseController extends Controller {
 		}
 	}
 
+	protected function setPageTitle( $title ) {
+		$this->layout->pageTitle = $title;
+	}
+
 }
