@@ -79,11 +79,13 @@ class AuthController extends \BaseController {
 	 */
 	public function register() {
 
+		$inputFields = Input::only( 'name', 'email', 'password' );
+
 		$validator = Validator::make(
-			Input::only( 'name', 'email', 'password' ),
+			$inputFields,
 			[
 				'name'		=> 'required',
-				'email' 	=> 'required|email',
+				'email' 	=> 'required|email|unique:users',
 				'password'	=> 'required|min:6'
 			]
 		);
@@ -93,12 +95,15 @@ class AuthController extends \BaseController {
 			return $this->json->error( $message );
 		}
 
-		if( ! Auth::attempt( Input::only( 'email', 'password' ) ) ) {
-			return $this->json->error( 'Invalid Email or Password' );
+		if( ! $this->userRepository->register( $inputFields ) ) {
+			return $this->json->error( 'Some Error' );
 		}
 
+		// Login the User ...
+		Auth::attempt( Input::only( 'email', 'password' ) );
+
 		// 
-		return $this->json->success( 'Login Successfull ...' );
+		return $this->json->success( 'Registration Successfull ...' );
 	}
 
 	/**
@@ -145,7 +150,8 @@ class AuthController extends \BaseController {
 	 * @return Response
 	 */
 	public function logout() {
-
+		Auth::logout();
+    	return Redirect::route( 'home' );
 	}
 
 
