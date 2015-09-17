@@ -11,7 +11,28 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+Route::get( '/', 'AuthController@index' );
+
+/**
+ * Normal Authentication ...
+ */
+Route::post( '/login', 'AuthController@login' );
+
+Route::get( '/facebook-login', [ 'as' => 'facebook-login', 'uses' => 'AuthController@facebookLogin' ] );
+Route::get( '/github-login', [ 'as' => 'github-login', 'uses' => 'AuthController@githubLogin' ] );
+
+Route::post( '/register', 'AuthController@register' );
+
+/**
+ * Authenticated Routes
+ */
+Route::group( [ 'before' => 'auth' ],
+	function() {
+
+		/**
+		 * We can use a resource here, 
+		 * but it is best to declare verbs that you only what want to use
+		 */
+		Route::get( 'contacts', 'ContactsController@index' );
+	}
+);
