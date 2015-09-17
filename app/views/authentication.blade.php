@@ -86,6 +86,8 @@
             </form>
 
         </div> <!-- /container -->
+
+        @include( 'blocks/js-config' )
         
         {{ HTML::script( 'js/app-all.js' ) }}
 
