@@ -11,7 +11,8 @@
 |
 */
 
-Route::get( '/', 'AuthController@index' );
+// Default Root Page ...
+Route::get( '/', [ 'as' => 'root', 'uses' => 'AuthController@index' ] );
 
 /**
  * Normal Authentication ...

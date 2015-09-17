@@ -31,8 +31,7 @@ class AuthController extends \BaseController {
 	}
 
 	/**
-	 * Display a listing of the resource.
-	 *
+	 * 
 	 * @return Response
 	 */
 	public function index()
@@ -73,7 +72,7 @@ class AuthController extends \BaseController {
 	}
 
 	/**
-	 * [login description]
+	 * Process Registration
 	 * @return Json Response
 	 */
 	public function register() {
@@ -97,7 +96,7 @@ class AuthController extends \BaseController {
 		}
 
 		// 
-		return $this->json->success( 'Login Successfull ...' );	
+		return $this->json->success( 'Login Successfull ...' );
 	}
 
 	/**
