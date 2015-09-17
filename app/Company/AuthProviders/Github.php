@@ -20,6 +20,8 @@
 
 			$user = $this->getUser();
 
+			$userObject = User::where( '' );
+
 			Auth::attempt( $user );
 
 		}

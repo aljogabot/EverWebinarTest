@@ -21,13 +21,17 @@
 			return json_decode( $this->provider->request( '/me?fields=id,name,email,picture,link' ), TRUE );
 		}
 
+		
 		public function authenticate() {
 
 			$user = $this->getUser();
 
 			$user = User::where( 'email', '=', $user[ 'email' ] );
 
-			if( ! $user )
+
+			if( ! $user ) {
+
+			}
 
 			return Auth::attempt( $user );
 
