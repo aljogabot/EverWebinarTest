@@ -17,8 +17,13 @@ elixir(
 		// Move Dependencies to Certain Paths ...
 		$mix.copy( 'resources/assets/bower_components/jquery/dist/jquery.min.js', 'resources/assets/js/libs/jquery.min.js' );
 
+		$mix.copy( 'resources/assets/js/views', 'public/js/views' );
+		$mix.copy( 'resources/assets/fonts', 'public/fonts' );
+		$mix.copy( 'resources/assets/images', 'public/images' );
+
 		$mix.styles(
 			[
+				'fonts.css',
 				'bootstrap.min.css'
 			],
 			'public/css/app-all.css'
@@ -27,7 +32,9 @@ elixir(
 		$mix.scripts(
 			[
 				'libs/jquery.min.js',
-				//'services/facebook-service.js'
+				'services/UrlService.js',
+				'services/FormMessageService.js',
+				'services/BootstrapModalService.js'
 			],
 			'public/js/app-all.js'
 		);
