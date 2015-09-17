@@ -2,13 +2,13 @@
 
 	namespace Company\Repositories;
 
-	use User;
+	use Contact;
 	
-	class UserRepository extends EloquentRepository {
-
+	class ContactRepository extends EloquentRepository {
+		
 		protected $model;
 	
-		public function __construct( User $model ) {
+		public function __construct( Contact $model ) {
 			$this->model = $model;
 		}
 
