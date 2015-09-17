@@ -7,10 +7,6 @@
 	
 	abstract class EloquentRepository {
 
-		public function save() {
-			return $this->model->save();
-		}
-
 		public function id() {
 			return $this->model->id;
 		}
@@ -69,17 +65,21 @@
 			return $recordObject;
 
 		}
+
 		/**
 		 * Add new
-		 * 
-		 *
 		 * @return object
 		 */
 		public function create( $input ) {
-			$resultObject = $this->model->create( $input );
+			return $this->model->create( $input );
+		}
 
-			
-			
+		/**
+		 * @param  $input Array
+		 * @return Bool
+		 */
+		public function save( $input ) {
+			return $this->model->save( $input );
 		}
 
 		public function findByEncryptedId( $id ) {
