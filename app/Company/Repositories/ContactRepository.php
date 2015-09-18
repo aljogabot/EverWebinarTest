@@ -39,9 +39,9 @@
 
 		public function getAllBySearch( $text ) {
 
-			return $this->model->orWhere( 'name', $text )
-							->orWhere( 'phone', $text )
-							->orWhere( 'email', $text )
+			return $this->model->orWhere( 'name', 'LIKE', "%$text%" )
+							->orWhere( 'phone', 'LIKE', "%$text%" )
+							->orWhere( 'email', 'LIKE', "%$text%" )
 							->get();
 
 		}
