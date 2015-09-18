@@ -17,7 +17,7 @@ AjaxService.prototype = {
 	},
 
 	get : function( $url, $parameters, callback ) {
-		// Sometime baby ...
+		// Some Other Time Baby ...
 	}
 
 };

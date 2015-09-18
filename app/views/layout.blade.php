@@ -16,11 +16,20 @@
 
     <body>
 
+        @include( 'blocks/navigation' )
+
+        <div class="container theme-showcase" role="main" style="padding-top: 100px;">
+            @yield( 'content' )
+        </div>
         
-        
+        @include( 'blocks/js-config' )
+
         {{ HTML::script( 'js/app-all.js' ) }}
 
         <!-- Page level scripts -->
-        
+        @section( 'page-level-scripts' )@show
+
+        @include( 'blocks/logout' )
+
     </body>
 </html>

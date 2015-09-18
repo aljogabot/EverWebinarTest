@@ -21,6 +21,6 @@ var $Url;
 
 $( document ).ready(
 	function() {
-		$url = new UrlService();
+		$Url = new UrlService();
 	}
 );

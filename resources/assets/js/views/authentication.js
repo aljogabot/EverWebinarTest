@@ -12,6 +12,8 @@ AuthenticationPage.prototype = {
 
 	init_events : function() {
 
+		var $self = this;
+
 		$( '.go-to-registration' ).click(
 			function() {
 				$( '#signin-container' ).hide();
@@ -26,6 +28,25 @@ AuthenticationPage.prototype = {
 			}
 		);
 
+		$( '.logout-user' ).click(
+			function() {
+				$BootstrapModalService.setContent( $( '#logout-modal-container' ).html() ).load(
+					function() {
+						$self.logout_event();
+					}
+				);
+
+			}
+		);
+
+	},
+
+	logout_event : function() {
+		$( '#modal-container .process-logout' ).click(
+			function() {
+				$Url.redirect( '/logout' );
+			}
+		);
 	},
 
 	init_login_form : function() {
@@ -45,7 +66,7 @@ AuthenticationPage.prototype = {
 					function( $json_response ) {
 						if( $json_response.success ) {
 							$FormMessageService.success( $json_response.message );
-
+							$Url.redirect( 'contacts' );
 						} else {
 							$FormMessageService.error( $json_response.message );
 						}
@@ -73,7 +94,7 @@ AuthenticationPage.prototype = {
 					function( $json_response ) {
 						if( $json_response.success ) {
 							$FormMessageService.success( $json_response.message );
-
+							$Url.redirect( 'contacts' );
 						} else {
 							$FormMessageService.error( $json_response.message );
 						}

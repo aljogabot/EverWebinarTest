@@ -18,72 +18,13 @@
 
         <div class="container" id="signin-container">
 
-            <form class="form-signin" name="login-form" method="POST" action="/login">
-
-                <h2 class="form-signin-heading">Please sign in</h2>
-                <div class="alert"></div>
-
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Email Address" required autofocus>    
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>    
-                </div>
-                
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" name="remember_me" value="TRUE"> Remember me
-                    </label>
-                </div> 
-                
-                <div class="form-group">
-                    Not Yet A Member?
-                    <a href="javascript:void(0);" class="go-to-registration">Please Register Here</a>
-                </div>
-                
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-
-                <br />
-
-                <div class="pull-right col-md-5">
-                    <a href="{{ $facebook_url }}"><img src="images/facebook-connect-button.png" width="200" /></a>
-                    <a href="{{ $github_url }}"><img src="images/github-connect-button.png" width="200" /></a>
-                </div>
-
-            </form>
+            @include( 'authentication.login' )
 
         </div> <!-- /container -->
 
         <div class="container" id="register-container" style="display: none;">
 
-            <form class="form-register" name="register-form" method="POST" action="/register">
-
-                <h2 class="form-signin-heading">Registration</h2>
-                <div class="alert"></div>
-
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Email Address" required autofocus>    
-                </div>
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Name" required autofocus>    
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>    
-                </div>
-                
-                <div class="form-group">
-                    Already A Member?
-                    <a href="javascript:void(0);" class="go-to-signin">Please Sign In Here</a>
-                </div>
-                
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-
-            </form>
+            @include( 'authentication.register' )
 
         </div> <!-- /container -->
 
@@ -91,7 +32,5 @@
         
         {{ HTML::script( 'js/app-all.js' ) }}
 
-        <!-- Page level scripts -->
-        {{ HTML::script( 'js/views/authentication.js' ) }}
     </body>
 </html>
