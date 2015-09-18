@@ -26,7 +26,12 @@
 				'email' 		=> $contact->email,
 				'first_name'	=> $contact->first_name(),
 				'last_name'		=> $contact->last_name(),
-				'phone'			=> $contact->phone
+				'phone'			=> $contact->phone,
+				'field[2,0]' 	=> $contact->custom_1,
+				'field[3,0]' 	=> $contact->custom_2,
+				'field[4,0]' 	=> $contact->custom_3,
+				'field[5,0]' 	=> $contact->custom_4,
+				'field[6,0]' 	=> $contact->custom_5,
 			];
 
 			return $this->activeCampaign->api( 'contact/add', $contactData );
@@ -41,7 +46,12 @@
 				'email' 		=> $contact->email,
 				'first_name'	=> $contact->first_name(),
 				'last_name'		=> $contact->last_name(),
-				'phone'			=> $contact->phone
+				'phone'			=> $contact->phone,
+				'field[2,0]' 	=> $contact->custom_1,
+				'field[3,0]' 	=> $contact->custom_2,
+				'field[4,0]' 	=> $contact->custom_3,
+				'field[5,0]' 	=> $contact->custom_4,
+				'field[6,0]' 	=> $contact->custom_5,
 			];
 
 			return $this->activeCampaign->api( 'contact/sync?id=' . $contact->active_campaign_subscriber_id, $contactData );

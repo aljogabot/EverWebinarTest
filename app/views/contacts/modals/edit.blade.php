@@ -22,8 +22,9 @@
 		        <input type="text" id="phone" name="phone" class="form-control" placeholder="Phone" required autofocus value="{{ $contact->phone }}">
 			</div>
 
-			<button type="button" class="btn btn-primary">Show Custom Fields</button>
+			<button type="button" class="btn btn-primary show-custom-fields">Show Custom Fields</button>
 
+			<hr />
 			<div id="custom-fields-container" style="display: none;">
 
 				<div class="form-group">

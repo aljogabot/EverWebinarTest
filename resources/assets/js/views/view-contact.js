@@ -4,6 +4,7 @@ ViewContactModal.prototype = {
 
 	construct : function() {
 		this.init_form();
+		this.init_events();
 	},
 
 	init_form : function() {
@@ -30,6 +31,16 @@ ViewContactModal.prototype = {
 					}
 				);
 
+			}
+		);
+
+	},
+
+	init_events : function() {
+
+		$( '.show-custom-fields' ).click(
+			function() {
+				$( '#custom-fields-container' ).show();
 			}
 		);
 
