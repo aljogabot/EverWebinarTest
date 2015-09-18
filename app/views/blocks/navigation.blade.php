@@ -12,6 +12,9 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
+                    <a href="javascript:void(0);">Hi {{ $user->name }}!</a>
+                </li>
+                <li>
                     <a href="javascript:void(0);" class="logout-user">Logout</a>
                 </li>
             </ul>
