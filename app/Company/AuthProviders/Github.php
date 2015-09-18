@@ -21,15 +21,5 @@
 				'name'  		=> $user[ 'name' ],
 			];
 		}
-
-		public function authenticate() {
-
-			$user = $this->getUser();
-
-			$userObject = User::where( '' );
-
-			Auth::attempt( $user );
-
-		}
 	
 	}

@@ -26,21 +26,5 @@
 				'name'  		=> $user[ 'name' ],
 			];
 		}
-
-		
-		public function authenticate() {
-
-			$user = $this->getUser();
-
-			$user = User::where( 'email', '=', $user[ 'email' ] );
-
-
-			if( ! $user ) {
-
-			}
-
-			return Auth::attempt( $user );
-
-		}
 	
 	}
