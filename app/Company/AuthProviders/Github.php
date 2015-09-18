@@ -13,7 +13,13 @@
 		protected $landingRoute = 'github-login';
 
 		public function getUser() {
-			return json_decode( $this->provider->request( 'user' ), TRUE );
+			$user = json_decode( $this->provider->request( 'user' ), TRUE );
+
+			return [
+				'github_id' 	=> $user[ 'id' ],
+				'email'			=> $user[ 'email' ],
+				'name'  		=> $user[ 'name' ],
+			];
 		}
 
 		public function authenticate() {

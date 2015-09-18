@@ -146,7 +146,12 @@
 
 			$user = $this->githubAuthProvider->getUser();
 
-			dd( $user );
+			if( ! $this->userRepository->getByEmail( $user[ 'email' ] ) )
+				$this->userRepository->create( $user );
+
+			Auth::login( $this->userRepository->getByEmail( $user[ 'email' ] )->getModel() );
+
+			return Redirect::route( 'contacts' );
 
 		}
 
