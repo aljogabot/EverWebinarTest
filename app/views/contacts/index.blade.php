@@ -26,20 +26,14 @@
         	</tr>
       	</thead>
       	<tbody id="contacts-table-list">
-            <tr>
-                <th scope="row">1</th>
-                <td>Bogart Mansok</td>
-                <td>bogart@gmail.com</td>
-                <td>09175029559</td>
-                <td>
-                    <button class="btn btn-success">Edit</button>
-                    <button class="btn btn-danger">Delete</button>
-                </td>
-            </tr>
         	@include( 'contacts.blocks.list' )
       	</tbody>
     </table>
 @endsection
+
+@section( 'modals' )
+    @include( 'contacts.modals.delete' )
+@stop
 
 @section( 'page-level-scripts' )
 	{{ HTML::script( 'js/views/contact.js' ) }}

@@ -27,23 +27,23 @@
 			<div id="custom-fields-container" style="display: none;">
 
 				<div class="form-group">
-					<input type="text" id="custom_1" name="custom_1" class="form-control" placeholder="" required autofocus value="{{ $contact->custom_1 }}">
+					<input type="text" id="custom_1" name="custom_1" class="form-control" placeholder="" autofocus value="{{ $contact->custom_1 }}">
 				</div>
 
 				<div class="form-group">
-					<input type="text" id="custom_2" name="custom_2" class="form-control" placeholder="" required autofocus value="{{ $contact->custom_2 }}">
+					<input type="text" id="custom_2" name="custom_2" class="form-control" placeholder="" autofocus value="{{ $contact->custom_2 }}">
 				</div>
 
 				<div class="form-group">
-					<input type="text" id="custom_3" name="custom_3" class="form-control" placeholder="" required autofocus value="{{ $contact->custom_3 }}">
+					<input type="text" id="custom_3" name="custom_3" class="form-control" placeholder="" autofocus value="{{ $contact->custom_3 }}">
 				</div>
 
 				<div class="form-group">
-					<input type="text" id="custom_4" name="custom_4" class="form-control" placeholder="" required autofocus value="{{ $contact->custom_4 }}">
+					<input type="text" id="custom_4" name="custom_4" class="form-control" placeholder="" autofocus value="{{ $contact->custom_4 }}">
 				</div>
 
 				<div class="form-group">
-					<input type="text" id="custom_5" name="custom_5" class="form-control" placeholder="" required autofocus value="{{ $contact->custom_5 }}">
+					<input type="text" id="custom_5" name="custom_5" class="form-control" placeholder="" autofocus value="{{ $contact->custom_5 }}">
 				</div>
 
 			</div>

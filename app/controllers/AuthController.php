@@ -107,6 +107,7 @@
 
 			// 
 			return $this->json->success( 'Registration Successfull ...' );
+			
 		}
 
 		/**

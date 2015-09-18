@@ -30,13 +30,14 @@ Route::post( '/register', 'AuthController@register' );
  */
 Route::group( [ 'before' => 'auth' ],
 	function() {
-
 		/**
 		 * We can use a resource here, 
 		 * but it is best to declare verbs that you only what want to use
 		 */
 		Route::get( 'contacts', [ 'as' => 'contacts', 'uses' => 'ContactsController@index' ] );
+		Route::post( 'contacts', [ 'as' => 'post-contacts', 'uses' => 'ContactsController@index' ] );
 		Route::post( 'contacts/{contactId}/edit', 'ContactsController@edit' );
 		Route::post( 'contacts/{contactId}/save', [ 'as' => 'save-contact', 'uses' => 'ContactsController@store' ] );
+		Route::post( 'contacts/{contactId}/delete', [ 'as' => 'delete-contact', 'uses' => 'ContactsController@destroy' ] );
 	}
 );

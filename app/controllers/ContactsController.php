@@ -31,7 +31,7 @@
 			$contacts = $this->userRepository->getAllContacts();
 
 			if( Request::ajax() ) {
-				$this->json->set( 'contacts', $contacts );
+				$this->json->set( 'content', View::make( 'contacts.blocks.list', compact( 'contacts' ) )->render() );
 				return $this->json->success();
 			}
 
@@ -66,7 +66,31 @@
 		 * @return [type] [description]
 		 */
 		public function store( $contactId ) {
-			dd( $contactId );
+
+			$inputFields = Input::all();
+
+			$validator = Validator::make(
+				$inputFields,
+				[
+					'name' 	=> 'required',
+					'email'	=> 'required_without_all:phone|email',
+					'phone' => 'required_without_all:email'
+				]
+			);
+
+			if( $validator->fails() ) {
+				$message = join( "<br />", $validator->messages()->all() );
+				return $this->json->error( $message );
+			}
+
+			$contact = $this->contactRepository->instantiate( $contactId, $inputFields );
+
+			if( $this->userRepository->getModel()->contacts()->save( $contact ) ) {
+				return $this->json->success( 'Contact Saved Successfully ...' ); 
+			} else {
+				return $this->json->error( 'There was an error saving the contact ...' ); 
+			}
+
 		}
 
 		/**
@@ -74,7 +98,20 @@
 		 * @return [type] [description]
 		 */
 		public function destroy( $contactId ) {
-			dd( $contactId );
+			
+			$contact = Contact::find( $contactId );
+
+			if( ! $contact ) {
+				return $this->json->error( 'Error on Deleting ... No Contact Found' );
+			}
+
+			if( ! $this->userRepository->hasContact( $contact ) ) {
+				return $this->json->error( 'Are You Trying To Hack? :)' );  
+			}
+
+			$contact->delete();
+			return $this->json->success( 'Contact Deleted Successfully ...' );
+
 		}
 
 	}

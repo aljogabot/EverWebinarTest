@@ -24,5 +24,17 @@
 			return $userObject;
 
 		}
+
+		public function instantiate( $contactId, $fields ) {
+
+			$contact = Contact::find( $contactId );
+
+			if( ! $contact ) {
+				return $contact = new Contact( $fields );
+			}
+
+			return $contact->fill( $fields );
+
+		}
 	
 	}

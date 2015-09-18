@@ -33,5 +33,7 @@
 
         @include( 'blocks/logout' )
 
+        @section( 'modals' )@show
+
     </body>
 </html>

@@ -22,7 +22,8 @@ ViewContactModal.prototype = {
 					function( $json_response ) {
 						if( $json_response.success ) {
 							$FormMessageService.success( $json_response.message );
-							alert( 'here' );
+							$ContactsPage.reload_table();
+							$BootstrapModalService.unload();
 						} else {
 							$FormMessageService.error( $json_response.message );
 						}

@@ -2,7 +2,7 @@
 
 	namespace Company\Repositories;
 
-	use User, Hash;
+	use User, Contact, Hash;
 	
 	class UserRepository extends EloquentRepository {
 
@@ -21,6 +21,12 @@
 
 			return $this->model->contacts()
 							->get();
+
+		}
+
+		public function hasContact( Contact $contact ) {
+
+			return $contact->user_id == $this->model->id;
 
 		}
 

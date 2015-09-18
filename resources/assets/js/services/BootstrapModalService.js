@@ -17,6 +17,7 @@ BootstrapModalService.prototype = {
 		$( 'div#modal-container' ).on( 'hide.bs.modal',
 			function() {
 				$( 'div#modal-container' ).unbind( 'shown' );
+				$( 'div#modal-container .modal-dialog' ).html( '' );
 			}
 		);
 			
@@ -40,7 +41,6 @@ BootstrapModalService.prototype = {
 	},
 
 	unload : function() {
-		$( 'div#modal-container .modal-dialog' ).html( '' );
 		this.modal.modal( 'hide' );
 	},
 
