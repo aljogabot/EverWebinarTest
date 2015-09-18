@@ -12,9 +12,10 @@
 		protected $contactRepository;
 
 		public function __construct( UserRepository $userRepository, ContactRepository $contactRepository, JsonResponse $json ) {
-			$this->userRepository 		= $userRepository;
-			$this->contactRepository	= $contactRepository;
-			$this->json 				= $json;
+			
+			$this->userRepository 			= $userRepository;
+			$this->contactRepository		= $contactRepository;
+			$this->json 				 	= $json;
 
 			if( Request::ajax() )
 				$this->beforeFilter( 'csrf' );
