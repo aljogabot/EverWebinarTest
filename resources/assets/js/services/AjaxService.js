@@ -9,6 +9,9 @@ AjaxService.prototype = {
 				type: 'POST',
 				dataType: 'json',
 				data: $data,
+				headers: {
+			        'X-CSRF-Token': $( 'meta[name="csrf-token"]' ).attr( 'content' )
+			    },
 				success: function( $json_response ) {
 					callback( $json_response );
 				}

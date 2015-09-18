@@ -14,14 +14,27 @@ BootstrapModalService.prototype = {
 
 		$( 'body' ).append( '<div id="modal-container" class="modal fade"><div class="modal-dialog"></div></div></div>' );
 
+		$( 'div#modal-container' ).on( 'hide.bs.modal',
+			function() {
+				$( 'div#modal-container' ).unbind( 'shown' );
+			}
+		);
+			
 	},
 
 	load : function( callback ) {
-		this.modal = $( '#modal-container' ).modal( 'show' );
 
-		$( 'div#modal-container' ).on( 'shown.bs.modal', function (e) {
-  			callback();
-		});
+		if( this.modal )  {
+			this.modal.modal( 'show' );
+		} else {
+			this.modal = $( '#modal-container' ).modal( 'show' );	
+		}
+
+		$( 'div#modal-container' ).on( 'shown.bs.modal', 
+			function (e) {
+  				callback();
+			}
+		);
 
 		return this;
 	},
@@ -29,7 +42,6 @@ BootstrapModalService.prototype = {
 	unload : function() {
 		$( 'div#modal-container .modal-dialog' ).html( '' );
 		this.modal.modal( 'hide' );
-		$( 'div#modal-container' ).unbind( 'shown' );
 	},
 
 	setContent : function( $content ) {
@@ -40,6 +52,7 @@ BootstrapModalService.prototype = {
 	getContent : function() {
 		return $( 'div#modal-container .modal-dialog' ).html();
 	}
+	
 };
 
 var $BootstrapModalService;
