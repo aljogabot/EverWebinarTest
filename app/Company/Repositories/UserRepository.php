@@ -2,7 +2,7 @@
 
 	namespace Company\Repositories;
 
-	use User;
+	use User, Hash;
 	
 	class UserRepository extends EloquentRepository {
 
@@ -10,6 +10,18 @@
 	
 		public function __construct( User $model ) {
 			$this->model = $model;
+		}
+
+		public function register( $input ) {
+			$input[ 'password' ] = Hash::make( $input[ 'password' ] );
+			return $this->model->create( $input );
+		}
+
+		public function getAllContacts() {
+
+			return $this->model->contacts()
+							->get();
+
 		}
 
 		public function getByEmail( $email ) {
