@@ -117,19 +117,20 @@
 
 			$code = Input::get( 'code' );
 
-			if( ! $code )
-				exit( 'dine' );
+			if( ! $code ) {
+				return Redirect::route( 'home' );
+			}
 				
 			$token = $this->facebookAuthProvider->requestAccessToken( $code );
 
 			$user = $this->facebookAuthProvider->getUser();
 
-			dd( $user );
-
 			if( ! $this->userRepository->getByEmail( $user[ 'email' ] ) )
-				$this->userRepository->register( $user );
+				$this->userRepository->create( $user );
 
-			Auth::attempt( $this->userRepository->getModel() );
+			Auth::login( $this->userRepository->getByEmail( $user[ 'email' ] )->getModel() );
+
+			return Redirect::route( 'contacts' );  
 
 		}
 
@@ -137,8 +138,9 @@
 
 			$code = Input::get( 'code' );
 
-			if( ! $code )
-				exit( 'dine' );
+			if( ! $code ) {
+				return Redirect::route( 'home' );
+			}
 				
 			$token = $this->githubAuthProvider->requestAccessToken( $code );
 

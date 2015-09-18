@@ -18,7 +18,13 @@
 		 * @return array
 		 */
 		public function getUser() {
-			return json_decode( $this->provider->request( '/me?fields=id,name,email,picture,link' ), TRUE );
+			$user = json_decode( $this->provider->request( '/me?fields=id,name,email,picture,link' ), TRUE );
+
+			return [
+				'facebook_id' 	=> $user[ 'id' ],
+				'email'			=> $user[ 'email' ],
+				'name'  		=> $user[ 'name' ],
+			];
 		}
 
 		
