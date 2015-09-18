@@ -5,7 +5,7 @@
             <h4 class="modal-title">Logout</h4>
         </div>
         <div class="modal-body">
-            <div class="alert alert-danger" style="display: none;"></div>
+            <div class="alert" style="display: none;"></div>
             <p>Are You Sure You Want To Delete "<span class="name"></span>" Contact?</p>
         </div>
         <div class="modal-footer">

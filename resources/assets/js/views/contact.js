@@ -115,7 +115,7 @@ ContactsPage.prototype = {
 			function() {
 				var $contactId = $( this ).data( 'id' );
 
-				$( 'div#modal-container .alert' ).hide();
+				$( 'div#modal-container .alert' ).attr( 'class', 'alert alert-info' ).html( 'Deleting ...' ).show();
 
 				$http.post( $Url.base() + '/contacts/' + $contactId + '/delete', { 'id' : $contactId },
 					function( $json_response ) {
