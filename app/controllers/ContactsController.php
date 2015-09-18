@@ -114,4 +114,19 @@
 
 		}
 
+		public function search() {
+
+			$text = Input::get( 'text' );
+
+			if( empty( $text ) ) {
+				$contacts = $this->userRepository->getAllContacts();
+			} else {
+				$contacts = $this->contactRepository->getAllBySearch( $text );
+			}
+
+			$this->json->set( 'content', View::make( 'contacts.blocks.list', compact( 'contacts' ) )->render() );
+			return $this->json->success();
+
+		}
+
 	}

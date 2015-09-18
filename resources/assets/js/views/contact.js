@@ -7,6 +7,7 @@ ContactsPage.prototype = {
 	construct : function() {
 		this.init_events();
 		this.init_table_events();
+		this.init_search();
 	},
 
 	reload_table : function() {
@@ -24,6 +25,33 @@ ContactsPage.prototype = {
 
 	init_search : function() {
 
+		var $self = this;
+
+		$( '#search' ).keyup(
+			function( $event ) {
+				var $text = $( this ).val();
+				if( $text.lenght < 2 ) {
+					$self.perform_search( '' );
+					return;
+				}
+
+				$self.perform_search( $text );
+			}
+		);
+
+	},
+
+	perform_search : function( $text ) {
+		var $self = this;
+
+		$http.post( $Url.base() + '/contacts/search', { 'text' : $text },
+			function( $json_response ) {
+				if( $json_response.success ) {
+					$( 'tbody#contacts-table-list' ).html( $json_response.content );
+					$self.init_table_events();
+				}
+			}
+		);
 	},
 
 	init_events : function() {

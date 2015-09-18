@@ -36,5 +36,14 @@
 			return $contact->fill( $fields );
 
 		}
+
+		public function getAllBySearch( $text ) {
+
+			return $this->model->orWhere( 'name', $text )
+							->orWhere( 'phone', $text )
+							->orWhere( 'email', $text )
+							->get();
+
+		}
 	
 	}
