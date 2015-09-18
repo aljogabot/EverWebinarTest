@@ -57,7 +57,7 @@
 				Input::only( 'email', 'password' ),
 				[
 					'email' 	=> 'required|email',
-					'password'	=> 'required|min:6'
+					'password'	=> 'required'
 				]
 			);
 
