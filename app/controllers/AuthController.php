@@ -24,6 +24,9 @@
 
 			$this->beforeFilter( 'guest', [ 'except' => [ 'logout' ] ] );
 
+			if( Request::ajax() )
+				$this->beforeFilter( 'csrf' );
+
 			$this->githubAuthProvider 	= $githubAuthProvider;
 			$this->facebookAuthProvider = $facebookAuthProvider;
 			$this->userRepository 		= $userRepository;
