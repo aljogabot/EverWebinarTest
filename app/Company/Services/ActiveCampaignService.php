@@ -43,6 +43,7 @@
 
 		public function updateContact( $contact ) {
 			$contactData = [
+				'id'			=> $contact->active_campaign_subscriber_id,
 				'email' 		=> $contact->email,
 				'first_name'	=> $contact->first_name(),
 				'last_name'		=> $contact->last_name(),
@@ -52,9 +53,11 @@
 				'field[4,0]' 	=> $contact->custom_3,
 				'field[5,0]' 	=> $contact->custom_4,
 				'field[6,0]' 	=> $contact->custom_5,
+				// Just Forced it for now :)
+				'p[3]'			=> '3',
 			];
 
-			return $this->activeCampaign->api( 'contact/sync?id=' . $contact->active_campaign_subscriber_id, $contactData );
+			return $this->activeCampaign->api( 'contact/edit?id=' . $contact->active_campaign_subscriber_id, $contactData );
 		}
 
 		public function deleteContact( $contactId ) {
