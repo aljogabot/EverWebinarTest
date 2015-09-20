@@ -1,13 +1,12 @@
 <?php
 
-	namespace Company\AuthProviders\Contracts;
-	
-	interface ProviderInterface  {
-	
-		public function getAuthUrl();
+namespace Company\AuthProviders\Contracts;
 
-		public function requestAccessToken( $code );
+interface ProviderInterface
+{
+    public function getAuthUrl();
 
-		public function getUser();
-	
-	}
+    public function requestAccessToken($code);
+
+    public function getUser();
+}

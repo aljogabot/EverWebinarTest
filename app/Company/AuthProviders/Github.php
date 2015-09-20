@@ -1,25 +1,25 @@
 <?php
 
-	namespace Company\AuthProviders;
+namespace Company\AuthProviders;
 
-	use Company\AuthProviders\Contracts\ProviderInterface;
-	use Auth;
-	
-	class Github extends Provider implements ProviderInterface {
-	
-		protected $provider;
+use Company\AuthProviders\Contracts\ProviderInterface;
+use Auth;
 
-		protected $providerName = 'Github';
-		protected $landingRoute = 'github-login';
+class Github extends Provider implements ProviderInterface
+{
+    protected $provider;
 
-		public function getUser() {
-			$user = json_decode( $this->provider->request( 'user' ), TRUE );
+    protected $providerName = 'Github';
+    protected $landingRoute = 'github-login';
 
-			return [
-				'github_id' 	=> $user[ 'id' ],
-				'email'			=> $user[ 'email' ],
-				'name'  		=> $user[ 'name' ],
-			];
-		}
-	
-	}
+    public function getUser()
+    {
+        $user = json_decode($this->provider->request('user'), true);
+
+        return [
+            'github_id'   => $user[ 'id' ],
+            'email'       => $user[ 'email' ],
+            'name'        => $user[ 'name' ],
+        ];
+    }
+}

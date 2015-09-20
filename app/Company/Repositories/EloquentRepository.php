@@ -5,107 +5,110 @@ namespace Company\Repositories;
 use DB;
 use Crypt;
 
-abstract class EloquentRepository {
+abstract class EloquentRepository
+{
+    public function id()
+    {
+        return $this->model->id;
+    }
 
-	public function id() {
-		return $this->model->id;
-	}
+    public function loaded()
+    {
+        return ! is_null($this->model->id);
+    }
 
-	public function loaded() {
-		return ! is_null( $this->model->id );
-	}
+    public function getModel()
+    {
+        if (! $this->loaded()) {
+            return false;
+        }
 
-	public function getModel() {
+        return $this->model;
+    }
 
-		if( ! $this->loaded() )
-			return FALSE;
+    /**
+     * Set a loaded model on the repository ...
+     * @param \Eloquent $model
+     */
+    public function setModel(\Eloquent $model)
+    {
+        if (is_null($model->id)) {
+            dd('ERROR');
+        }
 
-		return $this->model;
-		
-	}
+        $this->model = $model;
 
-	/**
-	 * Set a loaded model on the repository ...
-	 * @param \Eloquent $model
-	 */
-	public function setModel( \Eloquent $model ) {
+        return $this;
+    }
 
-		if( is_null( $model->id ) ) {
-			dd( 'ERROR' );
-		}
+    /**
+     * Get all
+     * 
+     *
+     * @return object
+     */
+    public function getAll()
+    {
+        return $this->model->get();
+    }
+    /**
+     * Get specific object
+     * 
+     *
+     * @return object
+     */
+    public function getByid($id)
+    {
+        $recordObject = $this->model->find($id);
 
-		$this->model = $model;
+        if ($recordObject) {
+            $this->model = $recordObject;
+        }
 
-		return $this;
+        return $recordObject;
+    }
 
-	}
+    /**
+     * Add new
+     * @return object
+     */
+    public function create($input)
+    {
+        return $this->model->create($input);
+    }
 
-	/**
-	 * Get all
-	 * 
-	 *
-	 * @return object
-	 */
-	public function getAll() {
-		return $this->model->get();
-	}
-	/**
-	 * Get specific object
-	 * 
-	 *
-	 * @return object
-	 */
-	public function getByid( $id ) {
+    /**
+     * @param  $input Array
+     * @return Bool
+     */
+    public function save($input)
+    {
+        return $this->model->save($input);
+    }
 
-		$recordObject = $this->model->find( $id );
+    public function findByEncryptedId($id)
+    {
+        if (! $id) {
+            return false;
+        }
 
-		if( $recordObject )
-			$this->model = $recordObject;
+        $id = Crypt::decrypt($id);
 
-		return $recordObject;
+        if (! $id) {
+            return false;
+        }
 
-	}
+        return $this->getByid($id);
+    }
 
-	/**
-	 * Add new
-	 * @return object
-	 */
-	public function create( $input ) {
-		return $this->model->create( $input );
-	}
+    public function instantiate($modelId, $data)
+    {
+        $recordObject = $this->model->find($modelId);
 
-	/**
-	 * @param  $input Array
-	 * @return Bool
-	 */
-	public function save( $input ) {
-		return $this->model->save( $input );
-	}
+        if (! $recordObject) {
+            return $this->model->fill($data);
+        }
 
-	public function findByEncryptedId( $id ) {
-
-		if( ! $id )
-			return FALSE;
-
-		$id = Crypt::decrypt( $id );
-
-		if( ! $id )
-			return FALSE;
-
-		return $this->getByid( $id );
-
-	}
-
-	public function instantiate( $modelId, $data ) {
-
-		$recordObject = $this->model->find( $modelId );
-
-		if( ! $recordObject ) {
-			return $this->model->fill( $data );
-		}
-
-		return $recordObject->fill( $data );
-
-	}
-
+        return $recordObject->fill($data);
+    }
 }

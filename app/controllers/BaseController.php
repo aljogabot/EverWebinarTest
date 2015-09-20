@@ -1,24 +1,23 @@
 <?php
 
-class BaseController extends Controller {
+class BaseController extends Controller
+{
+    /**
+     * Setup the layout used by the controller.
+     *
+     * @return void
+     */
+    protected function setupLayout()
+    {
+        if (! is_null($this->layout)) {
+            $this->layout = View::make($this->layout);
+            $this->layout->user = Auth::user();
+            $this->layout->loggedIn = Auth::check();
+        }
+    }
 
-	/**
-	 * Setup the layout used by the controller.
-	 *
-	 * @return void
-	 */
-	protected function setupLayout()
-	{
-		if ( ! is_null($this->layout))
-		{
-			$this->layout = View::make( $this->layout );
-			$this->layout->user = Auth::user();
-			$this->layout->loggedIn = Auth::check();
-		}
-	}
-
-	protected function setPageTitle( $title ) {
-		$this->layout->pageTitle = $title;
-	}
-
+    protected function setPageTitle($title)
+    {
+        $this->layout->pageTitle = $title;
+    }
 }

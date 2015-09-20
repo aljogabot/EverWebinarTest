@@ -1,36 +1,39 @@
 <?php
 
-	namespace Company\AuthProviders;
+namespace Company\AuthProviders;
 
-	use URL, OAuth;
-	
-	Abstract class Provider {
-	
-		protected $providerName;
-		protected $landingRoute;
+use URL;
+use OAuth;
 
-		/**
-		 * Initialize the provider
-		 */
-		public function __construct() {
-			$this->provider = OAuth::consumer( $this->providerName, URL::route( $this->landingRoute ) );
-		}
+abstract class Provider
+{
+    protected $providerName;
+    protected $landingRoute;
 
-		/**
-		 * [getAuthUrl description]
-		 * @return [type] [description]
-		 */
-		public function getAuthUrl() {
-			return $this->provider->getAuthorizationUri();
-		}
+    /**
+     * Initialize the provider
+     */
+    public function __construct()
+    {
+        $this->provider = OAuth::consumer($this->providerName, URL::route($this->landingRoute));
+    }
 
-		/**
-		 * 
-		 * @param  String $code Code that came back from the Provider
-		 * @return String $token
-		 */
-		public function requestAccessToken( $code ) {
-			return $this->provider->requestAccessToken( $code );
-		}
-	
-	}
+    /**
+     * [getAuthUrl description]
+     * @return [type] [description]
+     */
+    public function getAuthUrl()
+    {
+        return $this->provider->getAuthorizationUri();
+    }
+
+    /**
+     * 
+     * @param  String $code Code that came back from the Provider
+     * @return String $token
+     */
+    public function requestAccessToken($code)
+    {
+        return $this->provider->requestAccessToken($code);
+    }
+}

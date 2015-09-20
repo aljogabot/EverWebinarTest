@@ -1,168 +1,165 @@
 <?php
 
-	use Company\AuthProviders\Github as GithubAuthProvider;
-	use Company\AuthProviders\Facebook as FacebookAuthProvider;
-	use Company\Repositories\UserRepository;
-	use Company\Handlers\ResponseHandler\JsonResponse;
+use Company\AuthProviders\Github as GithubAuthProvider;
+use Company\AuthProviders\Facebook as FacebookAuthProvider;
+use Company\Repositories\UserRepository;
+use Company\Handlers\ResponseHandler\JsonResponse;
 
-	class AuthController extends \BaseController {
+class AuthController extends \BaseController
+{
+    protected $layout = 'authentication';
 
-		protected $layout = 'authentication';
+    protected $githubAuthProvider;
+    protected $facebookAuthProvider;
+    protected $userRepository;
 
-		protected $githubAuthProvider;
-		protected $facebookAuthProvider;
-		protected $userRepository;
+    /**
+     * @param GithubAuthProvider
+     * @param FacebookAuthProvider
+     * @param UserRepository
+     */
+    public function __construct(GithubAuthProvider $githubAuthProvider, FacebookAuthProvider $facebookAuthProvider,
+            UserRepository $userRepository, JsonResponse $json
+        ) {
+        $this->beforeFilter('guest', [ 'except' => [ 'logout' ] ]);
 
-		/**
-		 * @param GithubAuthProvider
-		 * @param FacebookAuthProvider
-		 * @param UserRepository
-		 */
-		public function __construct( GithubAuthProvider $githubAuthProvider, FacebookAuthProvider $facebookAuthProvider,
-				UserRepository $userRepository, JsonResponse $json
-			) {
+        if (Request::ajax() || Request::isMethod('post')) {
+            $this->beforeFilter('csrf');
+        }
 
-			$this->beforeFilter( 'guest', [ 'except' => [ 'logout' ] ] );
+        $this->githubAuthProvider    = $githubAuthProvider;
+        $this->facebookAuthProvider = $facebookAuthProvider;
+        $this->userRepository        = $userRepository;
+        $this->json                = $json;
+    }
 
-			if( Request::ajax() )
-				$this->beforeFilter( 'csrf' );
+    /**
+     * 
+     * @return Response
+     */
+    public function index()
+    {
+        $this->setPageTitle('Login Page');
 
-			$this->githubAuthProvider 	= $githubAuthProvider;
-			$this->facebookAuthProvider = $facebookAuthProvider;
-			$this->userRepository 		= $userRepository;
-			$this->json 				= $json;
-		}
+        $this->layout->facebook_url = $this->facebookAuthProvider->getAuthUrl();
+        $this->layout->github_url    = $this->githubAuthProvider->getAuthUrl();
+    }
 
-		/**
-		 * 
-		 * @return Response
-		 */
-		public function index()
-		{
-			
-			$this->setPageTitle( 'Login Page' );
+    /**
+     * [login description]
+     * @return Json Response
+     */
+    public function login()
+    {
+        $validator = Validator::make(
+            Input::only('email', 'password'),
+            [
+                'email'    => 'required|email',
+                'password'    => 'required'
+            ]
+        );
 
-			$this->layout->facebook_url = $this->facebookAuthProvider->getAuthUrl();
-			$this->layout->github_url	= $this->githubAuthProvider->getAuthUrl();
+        if ($validator->fails()) {
+            $message = join("<br />", $validator->messages()->all());
+            return $this->json->error($message);
+        }
 
-		}
+        $remember_me = Input::get('remember_me', false) === "TRUE";
 
-		/**
-		 * [login description]
-		 * @return Json Response
-		 */
-		public function login() {
+        if (! Auth::attempt(Input::only('email', 'password'), $remember_me)) {
+            return $this->json->error('Invalid Email or Password');
+        }
 
-			$validator = Validator::make(
-				Input::only( 'email', 'password' ),
-				[
-					'email' 	=> 'required|email',
-					'password'	=> 'required'
-				]
-			);
+        // Else True
+        return $this->json->success('Login Successfull ...');
+    }
 
-			if( $validator->fails() ) {
-				$message = join( "<br />", $validator->messages()->all() );
-				return $this->json->error( $message );
-			}
+    /**
+     * Process Registration
+     * @return Json Response
+     */
+    public function register()
+    {
+        $inputFields = Input::only('name', 'email', 'password');
 
-			$remember_me = Input::get( 'remember_me', FALSE ) === "TRUE";
+        $validator = Validator::make(
+            $inputFields,
+            [
+                'name'        => 'required',
+                'email'    => 'required|email|unique:users',
+                'password'    => 'required|min:6'
+            ]
+        );
 
-			if( ! Auth::attempt( Input::only( 'email', 'password' ), $remember_me ) ) {
-				return $this->json->error( 'Invalid Email or Password' );
-			}
+        if ($validator->fails()) {
+            $message = join("<br />", $validator->messages()->all());
+            return $this->json->error($message);
+        }
 
-			// Else True
-			return $this->json->success( 'Login Successfull ...' );	
-		}
+        if (! $this->userRepository->register($inputFields)) {
+            return $this->json->error('Some Error');
+        }
 
-		/**
-		 * Process Registration
-		 * @return Json Response
-		 */
-		public function register() {
+        // Login the User ...
+        Auth::attempt(Input::only('email', 'password'));
 
-			$inputFields = Input::only( 'name', 'email', 'password' );
+        // 
+        return $this->json->success('Registration Successfull ...');
+    }
 
-			$validator = Validator::make(
-				$inputFields,
-				[
-					'name'		=> 'required',
-					'email' 	=> 'required|email|unique:users',
-					'password'	=> 'required|min:6'
-				]
-			);
+    /**
+     * [facebookLogin description]
+     * @return [type] [description]
+     */
+    public function facebookLogin()
+    {
+        $code = Input::get('code');
 
-			if( $validator->fails() ) {
-				$message = join( "<br />", $validator->messages()->all() );
-				return $this->json->error( $message );
-			}
+        if (! $code) {
+            return Redirect::route('home');
+        }
+            
+        $token = $this->facebookAuthProvider->requestAccessToken($code);
 
-			if( ! $this->userRepository->register( $inputFields ) ) {
-				return $this->json->error( 'Some Error' );
-			}
+        $user = $this->facebookAuthProvider->getUser();
 
-			// Login the User ...
-			Auth::attempt( Input::only( 'email', 'password' ) );
+        if (! $this->userRepository->getByEmail($user[ 'email' ])) {
+            $this->userRepository->create($user);
+        }
 
-			// 
-			return $this->json->success( 'Registration Successfull ...' );
-			
-		}
+        Auth::login($this->userRepository->getByEmail($user[ 'email' ])->getModel());
 
-		/**
-		 * [facebookLogin description]
-		 * @return [type] [description]
-		 */
-		public function facebookLogin() {
+        return Redirect::route('contacts');
+    }
 
-			$code = Input::get( 'code' );
+    public function githubLogin()
+    {
+        $code = Input::get('code');
 
-			if( ! $code ) {
-				return Redirect::route( 'home' );
-			}
-				
-			$token = $this->facebookAuthProvider->requestAccessToken( $code );
+        if (! $code) {
+            return Redirect::route('home');
+        }
+            
+        $token = $this->githubAuthProvider->requestAccessToken($code);
 
-			$user = $this->facebookAuthProvider->getUser();
+        $user = $this->githubAuthProvider->getUser();
 
-			if( ! $this->userRepository->getByEmail( $user[ 'email' ] ) )
-				$this->userRepository->create( $user );
+        if (! $this->userRepository->getByEmail($user[ 'email' ])) {
+            $this->userRepository->create($user);
+        }
 
-			Auth::login( $this->userRepository->getByEmail( $user[ 'email' ] )->getModel() );
+        Auth::login($this->userRepository->getByEmail($user[ 'email' ])->getModel());
 
-			return Redirect::route( 'contacts' );  
+        return Redirect::route('contacts');
+    }
 
-		}
-
-		public function githubLogin() {
-
-			$code = Input::get( 'code' );
-
-			if( ! $code ) {
-				return Redirect::route( 'home' );
-			}
-				
-			$token = $this->githubAuthProvider->requestAccessToken( $code );
-
-			$user = $this->githubAuthProvider->getUser();
-
-			if( ! $this->userRepository->getByEmail( $user[ 'email' ] ) )
-				$this->userRepository->create( $user );
-
-			Auth::login( $this->userRepository->getByEmail( $user[ 'email' ] )->getModel() );
-
-			return Redirect::route( 'contacts' );
-
-		}
-
-		/**
-		 * Logs Out The Current User ...
-		 * @return Response
-		 */
-		public function logout() {
-			Auth::logout();
-	    	return Redirect::route( 'home' );
-		}
-
-	}
+    /**
+     * Logs Out The Current User ...
+     * @return Response
+     */
+    public function logout()
+    {
+        Auth::logout();
+        return Redirect::route('home');
+    }
+}

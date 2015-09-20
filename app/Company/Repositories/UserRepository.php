@@ -1,46 +1,46 @@
 <?php
 
-	namespace Company\Repositories;
+namespace Company\Repositories;
 
-	use User, Contact, Hash;
-	
-	class UserRepository extends EloquentRepository {
+use User;
+use Contact;
+use Hash;
 
-		protected $model;
-	
-		public function __construct( User $model ) {
-			$this->model = $model;
-		}
+class UserRepository extends EloquentRepository
+{
+    protected $model;
 
-		public function register( $input ) {
-			$input[ 'password' ] = Hash::make( $input[ 'password' ] );
-			return $this->model->create( $input );
-		}
+    public function __construct(User $model)
+    {
+        $this->model = $model;
+    }
 
-		public function getAllContacts() {
+    public function register($input)
+    {
+        $input[ 'password' ] = Hash::make($input[ 'password' ]);
+        return $this->model->create($input);
+    }
 
-			return $this->model->contacts()
-							->get();
+    public function getAllContacts()
+    {
+        return $this->model->contacts()
+                        ->get();
+    }
 
-		}
+    public function hasContact(Contact $contact)
+    {
+        return $contact->user_id == $this->model->id;
+    }
 
-		public function hasContact( Contact $contact ) {
+    public function getByEmail($email)
+    {
+        $userObject = $this->model->where('email', '=', $email)
+                            ->first();
 
-			return $contact->user_id == $this->model->id;
+        if ($userObject) {
+            $this->model = $userObject;
+        }
 
-		}
-
-		public function getByEmail( $email ) {
-
-			$userObject = $this->model->where( 'email', '=', $email )
-			  			 		->first();
-
-			if( $userObject ) {
-				$this->model = $userObject;
-			}
-
-			return $userObject;
-
-		}
-	
-	}
+        return $userObject;
+    }
+}

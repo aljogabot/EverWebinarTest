@@ -1,41 +1,45 @@
 <?php
 
-	namespace Company\Handlers\ResponseHandler;
-		
-	use Response;
+namespace Company\Handlers\ResponseHandler;
 
-	/**
-	 * Json Response Handler ...
-	 */
-	class JsonResponse {
-		
-		private $data = [];
+use Response;
 
-		public function __construct() {
-			/**
-			 * Initialize success to FALSE ...
-			 */
-			$this->data[ 'success' ] = FALSE;
-		}
+/**
+ * Json Response Handler ...
+ */
+class JsonResponse
+{
+    private $data = [];
 
-		public function set( $key, $value ) {
-			$this->data[ $key ] = $value;
-			return $this;
-		}
+    public function __construct()
+    {
+        /**
+         * Initialize success to FALSE ...
+         */
+        $this->data[ 'success' ] = false;
+    }
 
-		public function error( $message = '' ) {
-			$this->data[ 'message' ] = $message;
-			return $this->render();
-		}
+    public function set($key, $value)
+    {
+        $this->data[ $key ] = $value;
+        return $this;
+    }
 
-		public function success( $message = '' ) {
-			$this->data[ 'success' ] = TRUE;
-			$this->data[ 'message' ] = $message;
-			return $this->render();
-		}
+    public function error($message = '')
+    {
+        $this->data[ 'message' ] = $message;
+        return $this->render();
+    }
 
-		public function render() {
-			return Response::json( $this->data );
-		}
-	
-	}
+    public function success($message = '')
+    {
+        $this->data[ 'success' ] = true;
+        $this->data[ 'message' ] = $message;
+        return $this->render();
+    }
+
+    public function render()
+    {
+        return Response::json($this->data);
+    }
+}
