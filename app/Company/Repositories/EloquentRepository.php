@@ -105,9 +105,10 @@ abstract class EloquentRepository
     {
 
         /**
-         * To check either '0' or 0
+         * Force Type to Int to check the ID ...
+         * @var [type]
          */
-        if( $modelId == 0 ) {
+        if( (int) $modelId === 0 ) {
             return $this->model->fill($data);
         }
 
