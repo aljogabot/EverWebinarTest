@@ -18,8 +18,7 @@
 			$response = $this->activeCampaignService->createContact($contact);
 
             if (! $response->success) {
-            	// API is disabled due to no subscription
-                $contact->delete();
+            	$contact->delete();
                 return FALSE;
             }
 
