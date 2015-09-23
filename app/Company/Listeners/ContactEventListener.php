@@ -17,10 +17,12 @@
 		{
 			$response = $this->activeCampaignService->createContact($contact);
 
-            if (! $response->success) {
+            /*
+             * Remove this ...
+             *if (! $response->success) {
             	$contact->delete();
                 return FALSE;
-            }
+            }*/
 
             $contact->active_campaign_subscriber_id = $response->subscriber_id;
             $contact->save();
@@ -28,7 +30,7 @@
 
 		public function updateToActiveCampaign( $contact ) 
 		{
-			$response = $this->activeCampaignService->updateContact($contact);
+			$this->activeCampaignService->updateContact($contact);
 		}
 
 		public function deleteToActiveCampaign( $contact )
