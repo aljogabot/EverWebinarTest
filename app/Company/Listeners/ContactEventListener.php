@@ -21,7 +21,6 @@
             	// API is disabled due to no subscription
                 $contact->delete();
                 return FALSE;
-                //return TRUE;
             }
 
             $contact->active_campaign_subscriber_id = $response->subscriber_id;
