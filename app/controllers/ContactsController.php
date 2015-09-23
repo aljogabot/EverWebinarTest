@@ -85,10 +85,10 @@ class ContactsController extends \BaseController
 
         $contact = $this->contactRepository->instantiate($contactId, $inputFields);
 
-        $event_type = $contact->id ? 'create' : 'update';
+        $event_type = $contact->id ? 'updated' : 'created';
 
         if ($this->userRepository->getModel()->contacts()->save($contact)) {
-            //Event::fire( 'contact.' . $event, $contact );  
+            Event::fire( 'contact.' . $event_type, $contact );  
             return $this->json->success('Contact Saved Successfully ...');
         } else {
             return $this->json->error('There was an error saving the contact ...');
@@ -114,7 +114,7 @@ class ContactsController extends \BaseController
         }
 
         if( $contact->delete() ) {
-            //Event::fire( 'contact.delete', $contact );  
+            Event::fire( 'contact.deleted', $contact );  
             return $this->json->success('Contact Deleted Successfully ...');
         }
 
