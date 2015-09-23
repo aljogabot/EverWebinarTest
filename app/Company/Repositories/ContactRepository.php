@@ -30,7 +30,9 @@ class ContactRepository extends EloquentRepository
         return $this->model->where( 'user_id', '=', $user_id )
                         ->where(
                             function( $query ) use( $text ) {
-                                $query->orWhere('name', 'LIKE', "%$text%")
+                                $query
+                                ->orWhere('first_name', 'LIKE', "%$text%")
+                                ->orWhere('last_name', 'LIKE', "%$text%")
                                 ->orWhere('phone', 'LIKE', "%$text%")
                                 ->orWhere('email', 'LIKE', "%$text%");
                             }
