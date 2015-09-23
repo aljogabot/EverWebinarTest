@@ -79,3 +79,16 @@ App::down(function()
 */
 
 require app_path().'/filters.php';
+
+/*
+|--------------------------------------------------------------------------
+| Require The Events File
+|--------------------------------------------------------------------------
+|
+| Next we will load the events file for the application. This gives us
+| a nice separate location to store our event definitions instead of putting 
+| them all in the main routes file.
+|
+*/
+
+require app_path() . '/events.php';
