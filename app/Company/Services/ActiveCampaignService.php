@@ -30,11 +30,11 @@ class ActiveCampaignService
             'first_name'    => $contact->first_name,
             'last_name'        => $contact->last_name,
             'phone'            => $contact->phone,
-            'field[2,0]'    => $contact->custom_1,
-            'field[3,0]'    => $contact->custom_2,
-            'field[4,0]'    => $contact->custom_3,
-            'field[5,0]'    => $contact->custom_4,
-            'field[6,0]'    => $contact->custom_5,
+            'field[1,0]'    => $contact->custom_1,
+            'field[2,0]'    => $contact->custom_2,
+            'field[3,0]'    => $contact->custom_3,
+            'field[4,0]'    => $contact->custom_4,
+            'field[5,0]'    => $contact->custom_5,
         ];
 
         return $this->activeCampaign->api('contact/add', $contactData);
@@ -53,13 +53,13 @@ class ActiveCampaignService
             'first_name'    => $contact->first_name,
             'last_name'     => $contact->last_name,
             'phone'         => $contact->phone,
-            'field[2,0]'    => $contact->custom_1,
-            'field[3,0]'    => $contact->custom_2,
-            'field[4,0]'    => $contact->custom_3,
-            'field[5,0]'    => $contact->custom_4,
-            'field[6,0]'    => $contact->custom_5,
+            'field[1,0]'    => $contact->custom_1,
+            'field[2,0]'    => $contact->custom_2,
+            'field[3,0]'    => $contact->custom_3,
+            'field[4,0]'    => $contact->custom_4,
+            'field[5,0]'    => $contact->custom_5,
             // Just Forced it for now :)
-            'p[3]'          => '3',
+            'p[1]'          => '1',
         ];
 
         return $this->activeCampaign->api('contact/edit?id=' . $contact->active_campaign_subscriber_id, $contactData);
