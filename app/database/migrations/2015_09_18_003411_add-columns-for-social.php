@@ -15,8 +15,8 @@ class AddColumnsForSocial extends Migration {
 		Schema::table('users', function(Blueprint $table)
 		{
 			//
-			$table->bigInteger( 'facebook_id' )->default( 0 );
-			$table->bigInteger( 'github_id' )->default( 0 );
+			$table->bigInteger( 'facebook_id' )->nullable()->unsigned();
+			$table->bigInteger( 'github_id' )->nullable()->unsigned();
 		});
 	}
 

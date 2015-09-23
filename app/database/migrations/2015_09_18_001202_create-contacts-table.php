@@ -16,7 +16,8 @@ class CreateContactsTable extends Migration {
 		{
 			$table->increments( 'id' );
 			$table->integer( 'user_id' )->unsigned();
-			$table->string( 'name' );
+			$table->string( 'first_name' );
+			$table->string( 'last_name' );
 			$table->string( 'email' );
 			$table->string( 'phone' );
 			$table->string( 'custom_1' );
@@ -25,6 +26,8 @@ class CreateContactsTable extends Migration {
 			$table->string( 'custom_4' );
 			$table->string( 'custom_5' );
 			$table->timestamps();
+
+			$table->index( 'email' );
 
 			$table->foreign( 'user_id' )
 				->references( 'id' )

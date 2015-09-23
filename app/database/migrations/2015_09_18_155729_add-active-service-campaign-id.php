@@ -15,7 +15,7 @@ class AddActiveServiceCampaignId extends Migration {
 		Schema::table('contacts', function(Blueprint $table)
 		{
 			//
-			$table->integer( 'active_campaign_subscriber_id' )->nullable();
+			$table->integer( 'active_campaign_subscriber_id' )->nullable()->unsigned();
 		});
 	}
 
