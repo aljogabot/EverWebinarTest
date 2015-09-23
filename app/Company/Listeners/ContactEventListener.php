@@ -5,13 +5,20 @@
 	use Company\Services\ActiveCampaignService;
 	
 	class ContactEventListener {
+
+		protected $activeCampaignService;
+
+		public function __construct( ActiveCampaignService $activeCampaignService )
+		{
+			$this->activeCampaignService = $activeCampaignService;
+		}
 	
 		public function createToActiveCampaign( $contact )
 		{
-			$activeCampaignService = new ActiveCampaignService;
-            $response = $activeCampaignService->createContact($contact);
+			$response = $this->activeCampaignService->createContact($contact);
 
             if (! $response->success) {
+            	// API is disabled due to no subscription
                 //$contact->delete();
                 //return FALSE;
                 return TRUE;
@@ -23,15 +30,13 @@
 
 		public function updateToActiveCampaign( $contact ) 
 		{
-			$activeCampaignService = new ActiveCampaignService;
-            $response = $activeCampaignService->updateContact($contact);
+			$response = $this->activeCampaignService->updateContact($contact);
 		}
 
 		public function deleteToActiveCampaign( $contact )
 		{
 			if ($contact->active_campaign_subscriber_id) {
-                $activeCampaignService = new ActiveCampaignService;
-                $activeCampaignService->deleteContact($contact->active_campaign_subscriber_id);
+                $this->activeCampaignService->deleteContact($contact->active_campaign_subscriber_id);
             }
 		}
 	
