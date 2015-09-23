@@ -46,7 +46,8 @@ class ContactsController extends \BaseController
     {
 
         $contactId = Input::get( 'contactId' );
-        $contact = $this->contactRepository->getById($contactId);
+
+        $contact = $this->contactRepository->findByEncryptedId($contactId);
 
         if (! $contact) {
             $contact = new Contact;
@@ -83,7 +84,14 @@ class ContactsController extends \BaseController
             return $this->json->error($message);
         }
 
-        $contact = $this->contactRepository->instantiate($contactId, $inputFields);
+        $contact = $this->contactRepository->findByEncryptedId($contactId);
+
+        if( ! $contact ) {
+            $contact = new Contact;
+            $contact->id = 0;
+        }
+
+        $contact->fill( $inputFields );
 
         $event_type = $contact->id ? 'updated' : 'created';
 

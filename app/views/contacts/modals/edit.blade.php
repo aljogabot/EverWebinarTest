@@ -1,5 +1,5 @@
 <div class="modal-content">
-	<form name="contact-form" action="{{ URL::route( 'save-contact', [ $contact->id ] ) }}">
+	<form name="contact-form" action="{{ URL::route( 'save-contact', [ Crypt::encrypt( $contact->id ) ] ) }}">
 	    <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title">Save Contact</h4>
