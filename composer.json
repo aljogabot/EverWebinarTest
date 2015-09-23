@@ -6,7 +6,8 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"artdarek/oauth-4-laravel": "dev-master",
-		"activecampaign/api-php": "^1.0"
+		"activecampaign/api-php": "^1.0",
+		"doctrine/dbal": "~2.3"
 	},
 	"autoload": {
 		"classmap": [

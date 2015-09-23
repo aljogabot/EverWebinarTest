@@ -25,11 +25,16 @@ class ContactRepository extends EloquentRepository
         return $userObject;
     }
 
-    public function getAllBySearch($text)
+    public function getAllBySearch($text, $user_id)
     {
-        return $this->model->orWhere('name', 'LIKE', "%$text%")
-                        ->orWhere('phone', 'LIKE', "%$text%")
-                        ->orWhere('email', 'LIKE', "%$text%")
+        return $this->model->where( 'user_id', '=', $user_id )
+                        ->where(
+                            function( $query ) use( $text ) {
+                                $query->orWhere('name', 'LIKE', "%$text%")
+                                ->orWhere('phone', 'LIKE', "%$text%")
+                                ->orWhere('email', 'LIKE', "%$text%");
+                            }
+                        )
                         ->get();
     }
 }

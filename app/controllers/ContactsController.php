@@ -17,10 +17,6 @@ class ContactsController extends \BaseController
         $this->contactRepository        = $contactRepository;
         $this->json                    = $json;
 
-        if (Request::ajax()) {
-            $this->beforeFilter('csrf');
-        }
-
         $this->userRepository->setModel(Auth::user());
     }
 
@@ -46,8 +42,10 @@ class ContactsController extends \BaseController
      * Load the Contact Form 
      * @return Json Response
      */
-    public function edit($contactId)
+    public function edit()
     {
+
+        $contactId = Input::get( 'contactId' );
         $contact = $this->contactRepository->getById($contactId);
 
         if (! $contact) {
@@ -73,7 +71,8 @@ class ContactsController extends \BaseController
         $validator = Validator::make(
             $inputFields,
             [
-                'name'    => 'required',
+                'first_name'    => 'required',
+                'last_name'    => 'required',
                 'email'    => 'required_without_all:phone|email',
                 'phone' => 'required_without_all:email'
             ]
@@ -86,7 +85,10 @@ class ContactsController extends \BaseController
 
         $contact = $this->contactRepository->instantiate($contactId, $inputFields);
 
+        $event_type = $contact->id ? 'create' : 'update';
+
         if ($this->userRepository->getModel()->contacts()->save($contact)) {
+            //Event::fire( 'contact.' . $event, $contact );  
             return $this->json->success('Contact Saved Successfully ...');
         } else {
             return $this->json->error('There was an error saving the contact ...');
@@ -97,8 +99,10 @@ class ContactsController extends \BaseController
      * [destroy description]
      * @return [type] [description]
      */
-    public function destroy($contactId)
+    public function destroy()
     {
+        $contactId = Input::get( 'id' );  
+
         $contact = Contact::find($contactId);
 
         if (! $contact) {
@@ -109,8 +113,13 @@ class ContactsController extends \BaseController
             return $this->json->error('Are You Trying To Hack? :)');
         }
 
-        $contact->delete();
-        return $this->json->success('Contact Deleted Successfully ...');
+        if( $contact->delete() ) {
+            //Event::fire( 'contact.delete', $contact );  
+            return $this->json->success('Contact Deleted Successfully ...');
+        }
+
+        return $this->json->error( 'There was something wrong, please try again ...' );
+        
     }
 
     public function search()
@@ -120,7 +129,7 @@ class ContactsController extends \BaseController
         if (empty($text)) {
             $contacts = $this->userRepository->getAllContacts();
         } else {
-            $contacts = $this->contactRepository->getAllBySearch($text);
+            $contacts = $this->contactRepository->getAllBySearch($text, Auth::id());
         }
 
         $this->json->set('content', View::make('contacts.blocks.list', compact('contacts'))->render());

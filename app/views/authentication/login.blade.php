@@ -1,4 +1,4 @@
-<form class="form-signin" name="login-form" method="POST" action="/login">
+<form class="form-signin" name="login-form" method="POST" action="{{ URL::route( 'login' ) }}">
 
     <h2 class="form-signin-heading">Please sign in</h2>
     <div class="alert"></div>

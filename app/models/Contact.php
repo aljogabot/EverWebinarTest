@@ -12,7 +12,8 @@ class Contact extends Eloquent
     protected $table = 'contacts';
 
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'phone',
         'custom_1',
@@ -66,15 +67,8 @@ class Contact extends Eloquent
         return $this->belongsTo('User');
     }
 
-    public function last_name()
+    public function name() 
     {
-        $last_name = explode(' ', $this->name);
-        return array_pop($last_name);
-    }
-
-    public function first_name()
-    {
-        $last_name = $this->last_name();
-        return trim(str_replace($last_name, '', $this->name));
+        return ucwords( $this->first_name ) . ' ' . ucwords( $this->last_name );
     }
 }

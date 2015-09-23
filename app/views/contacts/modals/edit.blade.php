@@ -8,8 +8,13 @@
 	    	<div class="alert" style="display:none;"></div>
 
 	    	<div class="form-group">
-				<label for="name">Name</label>
-		        <input type="text" id="name" name="name" class="form-control" placeholder="Name" required autofocus value="{{ $contact->name }}">
+				<label for="first_name">First Name</label>
+		        <input type="text" id="first_name" name="first_name" class="form-control" placeholder="First Name" required autofocus value="{{ $contact->first_name }}">
+			</div>
+
+			<div class="form-group">
+				<label for="last_name">Last Name</label>
+		        <input type="text" id="last_name" name="last_name" class="form-control" placeholder="Last Name" required autofocus value="{{ $contact->last_name }}">
 			</div>
 
 			<div class="form-group">

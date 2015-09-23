@@ -27,8 +27,8 @@ class ActiveCampaignService
     {
         $contactData = [
             'email'        => $contact->email,
-            'first_name'    => $contact->first_name(),
-            'last_name'        => $contact->last_name(),
+            'first_name'    => $contact->first_name,
+            'last_name'        => $contact->last_name,
             'phone'            => $contact->phone,
             'field[2,0]'    => $contact->custom_1,
             'field[3,0]'    => $contact->custom_2,
@@ -50,8 +50,8 @@ class ActiveCampaignService
         $contactData = [
             'id'            => $contact->active_campaign_subscriber_id,
             'email'        	=> $contact->email,
-            'first_name'    => $contact->first_name(),
-            'last_name'     => $contact->last_name(),
+            'first_name'    => $contact->first_name,
+            'last_name'     => $contact->last_name,
             'phone'         => $contact->phone,
             'field[2,0]'    => $contact->custom_1,
             'field[3,0]'    => $contact->custom_2,

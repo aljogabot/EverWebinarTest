@@ -103,6 +103,14 @@ abstract class EloquentRepository
 
     public function instantiate($modelId, $data)
     {
+
+        /**
+         * To check either '0' or 0
+         */
+        if( $modelId == 0 ) {
+            return $this->model->fill($data);
+        }
+
         $recordObject = $this->model->find($modelId);
 
         if (! $recordObject) {

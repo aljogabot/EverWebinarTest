@@ -44,7 +44,7 @@ ContactsPage.prototype = {
 	perform_search : function( $text ) {
 		var $self = this;
 
-		$http.post( $Url.base() + '/contacts/search', { 'text' : $text },
+		$http.post( $Url.base() + '/search-contacts', { 'text' : $text },
 			function( $json_response ) {
 				if( $json_response.success ) {
 					$( 'tbody#contacts-table-list' ).html( $json_response.content );
@@ -57,7 +57,7 @@ ContactsPage.prototype = {
 	init_events : function() {
 		$( '.add-contact' ).click(
 			function() {
-				$http.post( $Url.base() + '/' + 'contacts/0/edit', { 'some' : 'some' }, 
+				$http.post( $Url.base() + '/edit-contact', { 'contactId' : '0' }, 
 					function( $json_response ) {
 						if( $json_response.success ) {
 							$BootstrapModalService.setContent( $json_response.content ).load(
@@ -80,7 +80,7 @@ ContactsPage.prototype = {
 			function() {
 				var $contactId = $( this ).parent().data( 'id' );
 
-				$http.post( $Url.base() + '/' + 'contacts/' + $contactId + '/edit', { 'some' : 'some' }, 
+				$http.post( $Url.base() + '/edit-contact', { 'contactId' : $contactId }, 
 					function( $json_response ) {
 						$BootstrapModalService.setContent( $json_response.content ).load(
 							function() {
@@ -117,7 +117,7 @@ ContactsPage.prototype = {
 
 				$( 'div#modal-container .alert' ).attr( 'class', 'alert alert-info' ).html( 'Deleting ...' ).show();
 
-				$http.post( $Url.base() + '/contacts/' + $contactId + '/delete', { 'id' : $contactId },
+				$http.post( $Url.base() + '/delete-contact', { 'id' : $contactId },
 					function( $json_response ) {
 						if( $json_response.success ) {
 							$BootstrapModalService.unload();

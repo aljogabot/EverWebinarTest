@@ -36,6 +36,6 @@
 @stop
 
 @section( 'page-level-scripts' )
-	{{ HTML::script( 'js/views/contact.js' ) }}
+    {{ HTML::script( 'js/views/contact.js' ) }}
     {{ HTML::script( 'js/views/view-contact.js' ) }}
 @endsection

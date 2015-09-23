@@ -1,4 +1,4 @@
-<form class="form-register" name="register-form" method="POST" action="/register">
+<form class="form-register" name="register-form" method="POST" action="{{ URL::route( 'register' ) }}">
 
     <h2 class="form-signin-heading">Registration</h2>
     <div class="alert"></div>

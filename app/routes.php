@@ -11,19 +11,21 @@
 |
 */
 
+Route::when( '*', 'csrf', array( 'post' ) );
+
 // Default Home Page ...
 Route::get( '/', [ 'as' => 'home', 'uses' => 'AuthController@index' ] );
 
 /**
  * Normal Authentication ...
  */
-Route::post( '/login', 'AuthController@login' );
-Route::get( '/logout', 'AuthController@logout' );
+Route::post( 'login', [ 'as' => 'login', 'uses' => 'AuthController@login' ] );
+Route::get( 'logout', [ 'as' => 'logout', 'uses' => 'AuthController@logout' ] );
 
-Route::get( '/facebook-login', [ 'as' => 'facebook-login', 'uses' => 'AuthController@facebookLogin' ] );
-Route::get( '/github-login', [ 'as' => 'github-login', 'uses' => 'AuthController@githubLogin' ] );
+Route::get( 'facebook-login', [ 'as' => 'facebook-login', 'uses' => 'AuthController@facebookLogin' ] );
+Route::get( 'github-login', [ 'as' => 'github-login', 'uses' => 'AuthController@githubLogin' ] );
 
-Route::post( '/register', 'AuthController@register' );
+Route::post( 'register', [ 'as' => 'register', 'uses' => 'AuthController@register' ] );
 
 /**
  * Authenticated Routes
@@ -36,9 +38,9 @@ Route::group( [ 'before' => 'auth' ],
 		 */
 		Route::get( 'contacts', [ 'as' => 'contacts', 'uses' => 'ContactsController@index' ] );
 		Route::post( 'contacts', [ 'as' => 'post-contacts', 'uses' => 'ContactsController@index' ] );
-		Route::post( 'contacts/{contactId}/edit', 'ContactsController@edit' );
-		Route::post( 'contacts/{contactId}/save', [ 'as' => 'save-contact', 'uses' => 'ContactsController@store' ] );
-		Route::post( 'contacts/{contactId}/delete', [ 'as' => 'delete-contact', 'uses' => 'ContactsController@destroy' ] );
-		Route::post( 'contacts/search', [ 'as' => 'search-contacts', 'uses' => 'ContactsController@search' ] );
+		Route::post( 'edit-contact', [ 'as' => 'edit-contact', 'uses' => 'ContactsController@edit' ] );
+		Route::post( 'save-contact/{contactId}', [ 'as' => 'save-contact', 'uses' => 'ContactsController@store' ] );
+		Route::post( 'delete-contact', [ 'as' => 'delete-contact', 'uses' => 'ContactsController@destroy' ] );
+		Route::post( 'search-contacts', [ 'as' => 'searchcontacts', 'uses' => 'ContactsController@search' ] );
 	}
 );

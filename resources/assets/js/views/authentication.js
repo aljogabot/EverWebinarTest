@@ -44,7 +44,7 @@ AuthenticationPage.prototype = {
 	logout_event : function() {
 		$( '#modal-container .process-logout' ).click(
 			function() {
-				$Url.redirect( '/logout' );
+				$Url.redirect( 'logout' );
 			}
 		);
 	},

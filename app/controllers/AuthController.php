@@ -23,10 +23,6 @@ class AuthController extends \BaseController
         ) {
         $this->beforeFilter('guest', [ 'except' => [ 'logout' ] ]);
 
-        if (Request::ajax() || Request::isMethod('post')) {
-            $this->beforeFilter('csrf');
-        }
-
         $this->githubAuthProvider    = $githubAuthProvider;
         $this->facebookAuthProvider = $facebookAuthProvider;
         $this->userRepository        = $userRepository;
