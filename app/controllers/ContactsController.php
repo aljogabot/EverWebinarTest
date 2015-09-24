@@ -88,7 +88,6 @@ class ContactsController extends \BaseController
 
         if( ! $contact ) {
             $contact = new Contact;
-            $contact->id = 0;
         }
 
         $contact->fill( $inputFields );
