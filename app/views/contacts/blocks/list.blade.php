@@ -1,5 +1,5 @@
 @foreach( $contacts as $contact )
-	<tr id="{{ Crypt::encrypt( $contact->id ) }}">
+	<tr id="{{ $contact->id }}">
         <th scope="row">{{ $contact->id }}</th>
         <td>{{ $contact->name() }}</td>
         <td>{{ $contact->email }}</td>

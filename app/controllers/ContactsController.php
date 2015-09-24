@@ -121,7 +121,8 @@ class ContactsController extends \BaseController
         }
 
         if( $contact->delete() ) {
-            Event::fire( 'contact.deleted', $contact );  
+            Event::fire( 'contact.deleted', $contact );
+            $this->json->set( 'id', $contact->id );
             return $this->json->success('Contact Deleted Successfully ...');
         }
 

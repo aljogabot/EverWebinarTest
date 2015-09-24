@@ -121,7 +121,7 @@ ContactsPage.prototype = {
 					function( $json_response ) {
 						if( $json_response.success ) {
 							$BootstrapModalService.unload();
-							$( '#contacts-table-list tr#' + $contactId ).remove();	
+							$( '#contacts-table-list tr#' + $json_response.id ).remove();	
 						} else {
 							$( 'div#modal-container .alert' ).html( $json_response.message ).show();									
 						}
