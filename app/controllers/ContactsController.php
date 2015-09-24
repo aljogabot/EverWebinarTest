@@ -53,7 +53,7 @@ class ContactsController extends \BaseController
             $contact = new Contact;
             $contact->id = 0;
         } else {
-            if( $contact->user_id != Auth::id() ) {
+            if( ! $this->userRepository->hasContact( $contact ) ) {
                 return $this->json->error( 'No Hacking ...' );
             }
         }
@@ -93,7 +93,8 @@ class ContactsController extends \BaseController
         if( ! $contact ) {
             $contact = new Contact;
         } else {
-            if( $contact->user_id != Auth::id() ) {
+
+            if( ! $this->userRepository->hasContact( $contact ) ) {
                 return $this->json->error( 'No Hacking ...' );
             }
         }

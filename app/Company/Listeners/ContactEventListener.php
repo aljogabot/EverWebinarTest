@@ -30,6 +30,11 @@
 
 		public function updateToActiveCampaign( $contact ) 
 		{
+			
+			if( ! $contact->active_campaign_subscriber_id ) {
+				return $this->createToActiveCampaign( $contact );
+			}
+
 			$this->activeCampaignService->updateContact($contact);
 		}
 
