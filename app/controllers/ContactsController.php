@@ -111,7 +111,7 @@ class ContactsController extends \BaseController
     {
         $contactId = Input::get( 'id' );  
 
-        $contact = Contact::find($contactId);
+        $contact = $this->contactRepository->findByEncryptedId($contactId);
 
         if (! $contact) {
             return $this->json->error('Error on Deleting ... No Contact Found');
