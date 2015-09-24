@@ -18,11 +18,11 @@
 			$response = $this->activeCampaignService->createContact($contact);
 
             /*
-             * Remove this ...
-             *if (! $response->success) {
-            	$contact->delete();
+             * Remove this ...*/
+            if (! $response->success) {
+            	//$contact->delete();
                 return FALSE;
-            }*/
+            }
 
             $contact->active_campaign_subscriber_id = $response->subscriber_id;
             $contact->save();
