@@ -52,6 +52,10 @@ class ContactsController extends \BaseController
         if (! $contact) {
             $contact = new Contact;
             $contact->id = 0;
+        } else {
+            if( $contact->user_id != Auth::id() ) {
+                return $this->json->error( 'No Hacking ...' );
+            }
         }
 
         $content = View::make('contacts.modals.edit', compact('contact'))
@@ -88,6 +92,10 @@ class ContactsController extends \BaseController
 
         if( ! $contact ) {
             $contact = new Contact;
+        } else {
+            if( $contact->user_id != Auth::id() ) {
+                return $this->json->error( 'No Hacking ...' );
+            }
         }
 
         $contact->fill( $inputFields );
